@@ -4,23 +4,42 @@ import { HeroParallaxDemo } from "@/components/HeroParallaxDemo";
 import { DataSearch } from "@/components/DataSearch";
 import { Statistics } from "@/components/Statistics";
 import { Supporters } from "@/components/Supporters";
+import { DatasetCard } from "@/components/DatasetCard";
 
 const datasets = [
   {
     title: "Pharmacies de Garde",
     description: "Accédez en temps réel aux pharmacies de garde dans toute l'Algérie",
+    organization: "Ministère de la Santé",
+    organizationLogo: "/placeholder.svg",
+    keywords: ["santé", "pharmacie", "urgence"],
+    lastUpdate: "2024-03-15",
+    downloads: 1245,
+    views: 5890,
     price: 2,
     category: "Santé"
   },
   {
     title: "Wilayas",
     description: "Données détaillées sur les 58 wilayas d'Algérie",
+    organization: "Ministère de l'Intérieur",
+    organizationLogo: "/placeholder.svg",
+    keywords: ["géographie", "administration", "territoire"],
+    lastUpdate: "2024-03-10",
+    downloads: 3456,
+    views: 12890,
     price: 1,
     category: "Géographie"
   },
   {
     title: "Codes Postaux",
     description: "Base de données complète des codes postaux algériens",
+    organization: "Algérie Poste",
+    organizationLogo: "/placeholder.svg",
+    keywords: ["adresse", "postal", "localisation"],
+    lastUpdate: "2024-03-12",
+    downloads: 2789,
+    views: 8900,
     price: 1,
     category: "Adresses"
   }
