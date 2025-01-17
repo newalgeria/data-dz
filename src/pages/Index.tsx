@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import { Navbar } from "@/components/Navbar";
 import { DatasetCard } from "@/components/DatasetCard";
 import { Button } from "@/components/ui/button";
+import { HeroParallaxDemo } from "@/components/HeroParallaxDemo";
 
 const datasets = [
   {
@@ -29,27 +30,11 @@ const Index = () => {
     <div className="min-h-screen bg-gradient-to-b from-white to-accent">
       <Navbar />
       
-      {/* Hero Section */}
-      <motion.section 
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="pt-32 pb-16 container"
-      >
-        <div className="max-w-3xl mx-auto text-center">
-          <h1 className="text-5xl font-bold text-primary mb-6">
-            La plus grande base de données d'Algérie
-          </h1>
-          <p className="text-xl text-gray-600 mb-8">
-            Accédez à des données fiables et à jour sur l'Algérie via notre API simple et puissante
-          </p>
-          <Button size="lg" className="bg-primary text-white">
-            Explorer l'API
-          </Button>
-        </div>
-      </motion.section>
+      {/* Hero Section with Parallax */}
+      <HeroParallaxDemo />
 
       {/* Datasets Section */}
-      <section className="py-16 container">
+      <section className="py-16 container relative z-10 bg-white/80 backdrop-blur-lg rounded-lg mt-[200vh]">
         <h2 className="text-3xl font-bold text-center mb-12">Nos Jeux de Données</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {datasets.map((dataset) => (
