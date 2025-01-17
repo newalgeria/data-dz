@@ -1,6 +1,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Calendar, Download, Eye } from "lucide-react";
+import { BorderBeam } from "@/components/ui/border-beam";
 
 interface DatasetCardProps {
   title: string;
@@ -28,7 +29,14 @@ export const DatasetCard = ({
   category
 }: DatasetCardProps) => {
   return (
-    <Card className="hover:shadow-lg transition-shadow">
+    <Card className="relative group hover:shadow-lg transition-all duration-300 overflow-hidden">
+      <BorderBeam 
+        size={300} 
+        duration={20} 
+        colorFrom="#1a365d" 
+        colorTo="#10b981"
+        className="opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+      />
       <CardHeader>
         <div className="flex items-center justify-between mb-4">
           <div className="flex items-center">
