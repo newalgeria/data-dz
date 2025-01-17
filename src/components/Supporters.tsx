@@ -1,45 +1,50 @@
-import { motion } from "framer-motion";
+import { Marquee } from "@/components/ui/marquee";
 
 const supporters = [
   {
     name: "Sonatrach",
-    logo: "/placeholder.svg",
-    type: "enterprise"
+    url: "/placeholder.svg",
   },
   {
     name: "Sonelgaz",
-    logo: "/placeholder.svg",
-    type: "enterprise"
+    url: "/placeholder.svg",
   },
   {
     name: "Algérie Télécom",
-    logo: "/placeholder.svg",
-    type: "enterprise"
-  }
+    url: "/placeholder.svg",
+  },
+  {
+    name: "Air Algérie",
+    url: "/placeholder.svg",
+  },
+  {
+    name: "ENIE",
+    url: "/placeholder.svg",
+  },
+  {
+    name: "SNVI",
+    url: "/placeholder.svg",
+  },
 ];
 
 export const Supporters = () => {
   return (
-    <section className="py-16">
-      <div className="max-w-7xl mx-auto px-4">
-        <h2 className="text-3xl font-bold text-center mb-12">Ils nous font confiance</h2>
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
-          {supporters.map((supporter, index) => (
-            <motion.div
-              key={supporter.name}
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: index * 0.1 }}
-              className="flex flex-col items-center"
-            >
+    <section className="py-16 bg-white dark:bg-gray-900">
+      <div className="container mx-auto px-4">
+        <h2 className="text-3xl font-bold text-center mb-8">Ils nous font confiance</h2>
+        <div className="relative mt-6">
+          <Marquee className="max-w-full [--duration:40s]" pauseOnHover>
+            {supporters.map((supporter, idx) => (
               <img
-                src={supporter.logo}
+                key={idx}
+                src={supporter.url}
+                className="h-20 w-40 mx-8 object-contain opacity-70 grayscale hover:grayscale-0 hover:opacity-100 transition-all duration-300"
                 alt={supporter.name}
-                className="w-32 h-32 object-contain mb-4"
               />
-              <h3 className="text-lg font-semibold text-center">{supporter.name}</h3>
-            </motion.div>
-          ))}
+            ))}
+          </Marquee>
+          <div className="pointer-events-none absolute inset-y-0 left-0 h-full w-1/3 bg-gradient-to-r from-white dark:from-gray-900"></div>
+          <div className="pointer-events-none absolute inset-y-0 right-0 h-full w-1/3 bg-gradient-to-l from-white dark:from-gray-900"></div>
         </div>
       </div>
     </section>
