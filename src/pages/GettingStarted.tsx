@@ -2,29 +2,33 @@ import { Features } from "@/components/ui/features";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
 import { ArrowRight, Database, LineChart, Lock, Users } from "lucide-react";
+import { faCreditCard, faIcons } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const featuresData = [
   {
     id: 1,
-    title: "Données Ouvertes",
+    title: "Inscrivez-vous gratuitement",
     content: "Accédez à une vaste collection de données publiques algériennes",
-    icon: <Database className="h-6 w-6 text-primary" />,
-    image: "/placeholder.svg"
+    icon: <Users className="h-6 w-6 text-primary" />,
+    image: "/placeholder.svg",
   },
   {
     id: 2,
-    title: "Visualisation Interactive",
-    content: "Analysez les données avec des outils de visualisation puissants",
-    icon: <LineChart className="h-6 w-6 text-primary" />,
-    image: "/placeholder.svg"
+    title: "Rechargez votre compte",
+    content: "Achetez des crédits pour accéder à des données premium",
+    icon: (
+      <FontAwesomeIcon icon={faCreditCard} className="h-6 w-6 text-primary" />
+    ),
+    image: "/placeholder.svg",
   },
   {
     id: 3,
-    title: "Collaboration",
-    content: "Travaillez en équipe et partagez vos analyses",
-    icon: <Users className="h-6 w-6 text-primary" />,
-    image: "/placeholder.svg"
-  }
+    title: "C'est parti !",
+    content: "Commencez à explorer et analyser les données",
+    icon: <LineChart className="h-6 w-6 text-primary" />,
+    image: "/placeholder.svg",
+  },
 ];
 
 export default function GettingStarted() {
@@ -37,21 +41,18 @@ export default function GettingStarted() {
           Commencez votre voyage avec Data DZ
         </h1>
         <p className="text-center text-muted-foreground mb-16 max-w-2xl mx-auto">
-          Découvrez comment Data DZ peut vous aider à explorer et analyser les données publiques algériennes
+          Découvrez comment Data DZ peut vous aider à explorer et analyser les
+          données publiques algériennes
         </p>
-        
-        <Features 
+
+        <Features
           data={featuresData}
           collapseDelay={5000}
           linePosition="left"
         />
 
         <div className="mt-16 text-center">
-          <Button 
-            onClick={() => navigate("/login")}
-            size="lg"
-            className="group"
-          >
+          <Button onClick={() => navigate("/auth")} size="lg" className="group">
             Créer un compte
             <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
           </Button>

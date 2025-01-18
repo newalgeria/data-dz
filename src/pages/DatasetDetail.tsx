@@ -1,54 +1,43 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Calendar, Download, FileText, Database, User } from "lucide-react";
+import { Dataset } from "@/interface/DatasetInterface";
+import { datasets } from "@/data/FakeDataset";
 
 const DatasetDetail = () => {
   const { id } = useParams();
 
-  // Mock data - à remplacer par une vraie API
-  const dataset = {
-    id: id,
-    title: "Pharmacies de Garde - Dataset",
-    description: `# Dataset des Pharmacies de Garde
-    
-Ce jeu de données contient les informations sur les pharmacies de garde en Algérie.
+  const [fetching, setFetching] = useState(true);
+  const [dataset, setDataset] = useState<Dataset>(null as any);
 
-## Contenu
+  useEffect(() => {
+    // Fetch dataset by id
+    // setDataset(response.data);
 
-- Liste complète des pharmacies
-- Horaires de garde
-- Localisation
-- Contacts
+    datasets.forEach((dataset) => {
+      if (dataset.slug === id) {
+        setDataset(dataset);
+        setFetching(false);
+      }
+    });
+  });
 
-## Mise à jour
+  if (fetching) {
+    return <div>Chargement...</div>;
+  }
 
-Les données sont mises à jour quotidiennement.`,
-    fileInfo: {
-      size: "2.5 MB",
-      records: 15000,
-      lastUpdate: "2024-03-15",
-      format: "CSV",
-    },
-    provider: {
-      name: "Ministère de la Santé",
-      contact: "contact@sante.gov.dz",
-    },
-    relatedApi: "/api/pharmacies",
-    preview: [
-      { id: 1, name: "Pharmacie Centrale", address: "123 Rue ABC", wilaya: "Alger" },
-      { id: 2, name: "Pharmacie du Port", address: "45 Avenue XYZ", wilaya: "Oran" },
-    ],
-  };
-
+  if (!dataset) {
+    return <div>Dataset not found</div>;
+  }
   return (
     <div className="min-h-screen flex flex-col bg-background text-foreground">
       <Navbar />
-      
-      <main className="flex-grow container mx-auto px-4 py-8">
+
+      <main className="flex-grow container mx-auto px-4 py-8 mt-24">
         <div className="space-y-8">
           {/* En-tête */}
           <div className="flex justify-between items-start">
@@ -69,21 +58,17 @@ Les données sont mises à jour quotidiennement.`,
                 </span>
               </div>
             </div>
-            
+
             {dataset.relatedApi && (
               <Link to={dataset.relatedApi}>
-                <Button>
-                  Voir l'API associée
-                </Button>
+                <Button>Voir l'API associée</Button>
               </Link>
             )}
           </div>
 
           {/* Description */}
           <div className="prose dark:prose-invert max-w-none bg-card p-6 rounded-lg">
-            <div className="markdown-content">
-              {dataset.description}
-            </div>
+            <div className="markdown-content">{dataset.description}</div>
           </div>
 
           {/* Aperçu des données */}

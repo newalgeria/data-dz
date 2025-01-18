@@ -1,10 +1,10 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
 import Api from "./pages/Api";
-import ApiDetail from "./pages/ApiDetail";
 import DatasetDetail from "./pages/DatasetDetail";
 import GettingStarted from "./pages/GettingStarted";
 import Auth from "./pages/Auth";
+import ApiDetail from "./pages/ApiDetail";
 
 function App() {
   return (

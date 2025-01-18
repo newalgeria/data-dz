@@ -1,119 +1,88 @@
-import { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { Tabs, TabsList, TabsTrigger, TabsContent } from "@radix-ui/react-tabs";
+import { ApiData } from "@/interface/ApiInterface";
+import { apis } from "@/data/FakeApi";
 import { Navbar } from "@/components/Navbar";
-import { Footer } from "@/components/Footer";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Button } from "@/components/ui/button";
+import ReactMarkdown from "react-markdown";
 
-const ApiDetail = () => {
+export default function ApiDetail() {
   const { id } = useParams();
-  const [activeTab, setActiveTab] = useState("description");
 
-  // Mock data - replace with actual API data fetching
-  const apiData = {
-    title: "API Pharmacies de Garde",
-    description: `# API Pharmacies de Garde
-    
-Cette API permet d'accéder aux informations sur les pharmacies de garde en Algérie.
+  const [fetching, setFetching] = useState(true);
+  const [apiData, setApiData] = useState<ApiData | null>(null);
 
-## Fonctionnalités principales
+  useEffect(() => {
+    // Simule une récupération d'API par ID
+    const selectedApi = apis.find((api) => api.slug === id);
+    setApiData(selectedApi || null);
+    setFetching(false);
+  }, [id]);
 
-- Liste des pharmacies de garde par wilaya
-- Recherche par commune
-- Informations détaillées sur chaque pharmacie
-- Mise à jour en temps réel`,
-    documentation: `# Documentation technique
-
-## Endpoints
-
-GET /api/pharmacies/garde
-GET /api/pharmacies/garde/{wilaya}
-GET /api/pharmacies/garde/{wilaya}/{commune}
-
-## Authentication
-
-Bearer token requis pour tous les endpoints.`,
-    availability: 99.9,
-    requiresCredits: true,
-    provider: {
-      name: "Ministère de la Santé",
-      contact: "contact@sante.gov.dz"
-    }
-  };
+  if (fetching) return <div>Chargement...</div>;
+  if (!apiData) return <div>API non trouvée</div>;
 
   return (
-    <div className="min-h-screen flex flex-col bg-white dark:bg-gray-900">
+    <div className="min-h-screen bg-background text-foreground p-8">
       <Navbar />
-      
-      <main className="flex-grow">
-        <div className="relative">
-          <div className="container mx-auto px-4 pt-32">
-            <h1 className="text-4xl font-bold mb-4 text-gray-900 dark:text-white">
-              {apiData.title}
-            </h1>
-
-            <div className="flex items-center gap-4 mb-8">
-              <span className="text-sm bg-green-100 text-green-800 px-2 py-1 rounded">
-                {apiData.availability}% disponibilité
-              </span>
-              {apiData.requiresCredits && (
-                <span className="text-sm bg-yellow-100 text-yellow-800 px-2 py-1 rounded">
-                  Nécessite des crédits
-                </span>
-              )}
-            </div>
-
-            <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 mb-8">
-              <Tabs defaultValue="description" className="w-full">
-                <TabsList className="mb-6">
-                  <TabsTrigger value="description">Description</TabsTrigger>
-                  <TabsTrigger value="documentation">Documentation</TabsTrigger>
-                  <TabsTrigger value="test">Tester l'API</TabsTrigger>
-                </TabsList>
-
-                <TabsContent value="description" className="prose dark:prose-invert max-w-none">
-                  <div className="markdown-content">
-                    {apiData.description}
-                  </div>
-                </TabsContent>
-
-                <TabsContent value="documentation" className="prose dark:prose-invert max-w-none">
-                  <div className="markdown-content">
-                    {apiData.documentation}
-                  </div>
-                </TabsContent>
-
-                <TabsContent value="test">
-                  <div className="space-y-4">
-                    <h3 className="text-xl font-semibold mb-4">Testez l'API</h3>
-                    <div className="bg-gray-100 dark:bg-gray-900 p-4 rounded">
-                      <pre className="text-sm">
-                        curl -X GET https://api.data-dz.com/pharmacies/garde \
-                             -H "Authorization: Bearer YOUR_TOKEN"
-                      </pre>
-                    </div>
-                    <Button>Essayer</Button>
-                  </div>
-                </TabsContent>
-              </Tabs>
-            </div>
-
-            <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 mb-8">
-              <h3 className="text-xl font-semibold mb-4">Contacter le fournisseur</h3>
-              <p className="mb-4">Fournisseur: {apiData.provider.name}</p>
-              <Button variant="outline">
-                <a href={`mailto:${apiData.provider.contact}`}>
-                  Contacter par email
-                </a>
-              </Button>
-            </div>
-          </div>
+      {/* Titre principal */}
+      <header className="mb-8 mt-20">
+        <h1 className="text-4xl font-bold mb-4 text-gray-900 dark:text-white">
+          {apiData.title}
+        </h1>
+        <div className="flex items-center gap-4">
+          <Badge
+            content={`${apiData.availability}% disponibilité`}
+            type="success"
+          />
+          {apiData.requiresCredits && (
+            <Badge content="Nécessite des crédits" type="warning" />
+          )}
         </div>
-      </main>
+      </header>
 
-      <Footer />
+      {/* Contenu principal */}
+      <main className="bg-card rounded-lg shadow-lg p-6">
+        <Tabs defaultValue="description">
+          <TabsList className="flex space-x-4 mb-6">
+            <TabsTrigger value="description">Description</TabsTrigger>
+            <TabsTrigger value="documentation">Documentation</TabsTrigger>
+            <TabsTrigger value="test">Tester l'API</TabsTrigger>
+          </TabsList>
+
+          <TabsContent value="description">
+            <ReactMarkdown>{apiData.descriptionMD}</ReactMarkdown>
+          </TabsContent>
+          <TabsContent value="documentation">
+            <ReactMarkdown>{apiData.documentationMD}</ReactMarkdown>
+          </TabsContent>
+          <TabsContent value="test">
+            <div className="prose dark:prose-invert">
+              {/* Ajouter le contenu de test ici */}
+              <p>Section pour tester l'API (à implémenter).</p>
+            </div>
+          </TabsContent>
+        </Tabs>
+      </main>
     </div>
   );
-};
+}
 
-export default ApiDetail;
+// Composant Badge générique
+const Badge = ({
+  content,
+  type,
+}: {
+  content: string;
+  type: "success" | "warning";
+}) => {
+  const typeClasses =
+    type === "success"
+      ? "bg-green-100 text-green-800"
+      : "bg-yellow-100 text-yellow-800";
+  return (
+    <span className={`text-sm px-2 py-1 rounded ${typeClasses}`}>
+      {content}
+    </span>
+  );
+};

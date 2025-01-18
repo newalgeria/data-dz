@@ -29,13 +29,16 @@ const supporters = [
 
 export const Supporters = () => {
   return (
-    <section className="py-16 bg-white dark:bg-gray-900">
+    <section className="py-16 bg-white dark:bg-[#020817]">
       <div className="container mx-auto px-4">
         <h2 className="text-3xl font-bold text-center mb-8">
           Ils nous font confiance
         </h2>
         <div className="relative mt-6">
-          <Marquee className="max-w-full [--duration:40s]" pauseOnHover>
+          <Marquee
+            className="max-w-full [--duration:15s] md:[--duration:20s] lg:[--duration:35s]"
+            pauseOnHover
+          >
             {supporters.map((supporter, idx) => (
               <img
                 key={idx}
@@ -45,8 +48,6 @@ export const Supporters = () => {
               />
             ))}
           </Marquee>
-          <div className="pointer-events-none absolute inset-y-0 left-0 h-full w-1/3 bg-gradient-to-r from-white dark:from-gray-900"></div>
-          <div className="pointer-events-none absolute inset-y-0 right-0 h-full w-1/3 bg-gradient-to-l from-white dark:from-gray-900"></div>
         </div>
       </div>
     </section>

@@ -1,0 +1,51 @@
+import { useState } from "react";
+import { Input } from "@/components/ui/input";
+import { Lock, Unlock } from "lucide-react";
+import { Link } from "react-router-dom";
+import { apis } from "@/data/FakeApi";
+
+export const ApiSearch = () => {
+  const [searchQuery, setSearchQuery] = useState("");
+
+  return (
+    <div>
+      <div className="flex justify-between items-center mb-6 mt-12">
+        <h2 className="text-xl font-semibold">Search APIs</h2>
+        <Input
+          placeholder="Search for an API..."
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          className="max-w-xs dark:bg-gray-800"
+        />
+      </div>
+
+      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        {apis
+          .filter((api) =>
+            api.title.toLowerCase().includes(searchQuery.toLowerCase())
+          )
+          .map((api) => (
+            <Link to={`/api/${api.slug}`} key={api.title}>
+              <div className="p-6 rounded-lg border border-gray-800 bg-gray-900/50">
+                <div className="flex justify-between items-start mb-4">
+                  <h3 className="text-lg font-semibold">{api.title}</h3>
+                  {api.requiresCredits ? (
+                    <Lock className="text-yellow-500" />
+                  ) : (
+                    <Unlock className="text-green-500" />
+                  )}
+                </div>
+                <p className="text-gray-400 mb-4">{api.description}</p>
+                <div className="flex justify-between items-center text-sm">
+                  <span className="text-gray-400">
+                    Availability: {api.availability}%
+                  </span>
+                  <span className="text-gray-400">{api.version}</span>
+                </div>
+              </div>
+            </Link>
+          ))}
+      </div>
+    </div>
+  );
+};

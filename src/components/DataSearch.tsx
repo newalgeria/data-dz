@@ -8,49 +8,11 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { DatasetCard } from "./DatasetCard";
 import { motion } from "framer-motion";
 import { PlaceholdersAndVanishInput } from "./ui/placeholders-and-vanish-input";
 import { SparklesText } from "./ui/sparkles-text";
-
-const datasets = [
-  {
-    title: "Pharmacies de Garde",
-    description: "Base de données des pharmacies de garde en Algérie",
-    organization: "Ministère de la Santé",
-    organizationLogo: "/placeholder.svg",
-    keywords: ["santé", "pharmacie", "urgence"],
-    lastUpdate: "2024-03-15",
-    downloads: 1245,
-    views: 5890,
-    price: 2,
-    category: "Santé",
-  },
-  {
-    title: "Registre du Commerce",
-    description: "Données des entreprises inscrites au registre du commerce",
-    organization: "Ministère du Commerce",
-    organizationLogo: "/placeholder.svg",
-    keywords: ["commerce", "entreprises", "économie"],
-    lastUpdate: "2024-03-10",
-    downloads: 3456,
-    views: 12890,
-    price: 3,
-    category: "Économie",
-  },
-  {
-    title: "Données Météorologiques",
-    description: "Historique et prévisions météorologiques par wilaya",
-    organization: "Office National de la Météorologie",
-    organizationLogo: "/placeholder.svg",
-    keywords: ["météo", "climat", "prévisions"],
-    lastUpdate: "2024-03-14",
-    downloads: 2789,
-    views: 8900,
-    price: 1,
-    category: "Environnement",
-  },
-];
+import { datasets } from "@/data/FakeDataset";
+import { DatasetCard } from "./DatasetCard";
 
 const placeholders = [
   "Election présidentielle 2024",
@@ -69,7 +31,7 @@ export const DataSearch = () => {
   };
 
   return (
-    <section className="py-6 px-4 mt-5">
+    <section className="py-6 px-4 mt-5 bg-accent dark:bg-inherit">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
