@@ -10,7 +10,6 @@ const ApiDetail = () => {
   const { id } = useParams();
   const [activeTab, setActiveTab] = useState("description");
 
-  // Mock data - replace with actual API data fetching
   const apiData = {
     title: "API Pharmacies de Garde",
     description: `# API Pharmacies de Garde
