@@ -83,7 +83,7 @@ const Api = () => {
               Hi👋, you are in the right place to find{" "}
               <Highlight className="text-black dark:text-white">
                 the best apis of <ReactCountryFlag countryCode="DZ" svg />{" "}
-                Algeria .
+                Algeria
               </Highlight>
             </motion.h1>
           </HeroHighlight>
