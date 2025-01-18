@@ -57,3 +57,11 @@
     @apply bg-background text-foreground;
   }
 }
+
+.prose {
+  @apply dark:prose-invert max-w-none;
+}
+
+.markdown-content {
+  @apply prose dark:prose-invert max-w-none;
+}
