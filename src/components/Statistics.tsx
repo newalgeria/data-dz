@@ -28,7 +28,9 @@ export const Statistics = () => {
   return (
     <section className="py-16 bg-accent">
       <div className="max-w-7xl mx-auto px-4">
-        <h2 className="text-3xl font-bold text-center mb-12">Nos chiffres clés</h2>
+        <h2 className="text-3xl font-bold text-center mb-12">
+          Nos chiffres clés
+        </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {stats.map((stat, index) => (
             <motion.div
@@ -39,7 +41,9 @@ export const Statistics = () => {
               className="bg-white p-6 rounded-lg shadow-lg text-center"
             >
               <stat.icon className="w-12 h-12 mx-auto mb-4 text-primary" />
-              <h3 className="text-4xl font-bold text-primary mb-2">{stat.value}</h3>
+              <h3 className="text-4xl font-bold text-primary mb-2">
+                {stat.value}
+              </h3>
               <p className="text-gray-600">{stat.label}</p>
             </motion.div>
           ))}

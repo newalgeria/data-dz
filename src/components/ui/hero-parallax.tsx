@@ -8,6 +8,9 @@ import {
   MotionValue,
 } from "framer-motion";
 import { Link } from "react-router-dom";
+import ReactCountryFlag from "react-country-flag";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faAddressBook } from "@fortawesome/free-solid-svg-icons";
 
 export const HeroParallax = ({
   products,
@@ -16,6 +19,7 @@ export const HeroParallax = ({
     title: string;
     link: string;
     thumbnail: string;
+    icon?: any; // icon fontawesome
   }[];
 }) => {
   const firstRow = products.slice(0, 5);
@@ -105,14 +109,28 @@ export const Header = () => {
   return (
     <div className="max-w-7xl relative mx-auto py-20 md:py-40 px-4 w-full left-0 top-0">
       <h1 className="text-2xl md:text-7xl font-bold dark:text-white">
-        La plus grande base <br /> de données d'Algérie
+        La plus grande base <br /> de données d'Algérie{" "}
+        <ReactCountryFlag countryCode="DZ" svg />
       </h1>
       <p className="max-w-2xl text-base md:text-xl mt-8 dark:text-neutral-200">
-        Accédez à des données fiables et à jour sur l'Algérie via notre API simple et puissante.
-        Nous fournissons des données essentielles pour vos applications et services.
+        Accédez à des données fiables et à jour sur l'Algérie via notre API
+        simple et puissante. Nous fournissons des données essentielles pour vos
+        applications et services.
       </p>
     </div>
   );
+};
+
+export const randomColor = () => {
+  const colors = [
+    "bg-red-300",
+    "bg-blue-300",
+    "bg-green-300",
+    "bg-yellow-300",
+    "bg-purple-300",
+    "bg-pink-300",
+  ];
+  return colors[Math.floor(Math.random() * colors.length)];
 };
 
 export const ProductCard = ({
@@ -123,6 +141,7 @@ export const ProductCard = ({
     title: string;
     link: string;
     thumbnail: string;
+    icon?: any; // icon fontawesome
   };
   translate: MotionValue<number>;
 }) => {
@@ -135,17 +154,24 @@ export const ProductCard = ({
         y: -20,
       }}
       key={product.title}
-      className="group/product h-96 w-[30rem] relative flex-shrink-0"
+      className={`group/product h-96 w-[30rem] relative flex-shrink-0 ${
+        product.icon ? randomColor() : ""
+      }`}
     >
-      <Link
-        to={product.link}
-        className="block group-hover/product:shadow-2xl"
-      >
-        <img
-          src={product.thumbnail}
-          className="object-cover object-left-top absolute h-full w-full inset-0"
-          alt={product.title}
-        />
+      <Link to={product.link} className="block group-hover/product:shadow-2xl ">
+        {product.icon && (
+          <FontAwesomeIcon
+            icon={product.icon}
+            className="text-9xl text-white absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
+          />
+        )}
+        {!product.icon && (
+          <img
+            src={product.thumbnail}
+            className="object-cover object-left-top absolute h-full w-full inset-0"
+            alt={product.title}
+          />
+        )}
       </Link>
       <div className="absolute inset-0 h-full w-full opacity-0 group-hover/product:opacity-80 bg-black pointer-events-none"></div>
       <h2 className="absolute bottom-4 left-4 opacity-0 group-hover/product:opacity-100 text-white">

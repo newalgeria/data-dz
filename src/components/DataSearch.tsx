@@ -10,6 +10,8 @@ import {
 } from "@/components/ui/select";
 import { DatasetCard } from "./DatasetCard";
 import { motion } from "framer-motion";
+import { PlaceholdersAndVanishInput } from "./ui/placeholders-and-vanish-input";
+import { SparklesText } from "./ui/sparkles-text";
 
 const datasets = [
   {
@@ -22,7 +24,7 @@ const datasets = [
     downloads: 1245,
     views: 5890,
     price: 2,
-    category: "Santé"
+    category: "Santé",
   },
   {
     title: "Registre du Commerce",
@@ -34,7 +36,7 @@ const datasets = [
     downloads: 3456,
     views: 12890,
     price: 3,
-    category: "Économie"
+    category: "Économie",
   },
   {
     title: "Données Météorologiques",
@@ -46,30 +48,54 @@ const datasets = [
     downloads: 2789,
     views: 8900,
     price: 1,
-    category: "Environnement"
-  }
+    category: "Environnement",
+  },
+];
+
+const placeholders = [
+  "Election présidentielle 2024",
+  "Covid-19 Algérie",
+  "Statistiques économiques",
+  "Météo Oran",
 ];
 
 export const DataSearch = () => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    console.log(e.target.value);
+  };
+  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    console.log("submitted");
+  };
+
   return (
-    <section className="py-12 px-4">
+    <section className="py-6 px-4 mt-5">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
         className="max-w-7xl mx-auto"
       >
-        <h2 className="text-3xl font-bold mb-8">Rechercher des données</h2>
-        
-        <div className="flex gap-4 mb-8">
-          <Input 
-            placeholder="Ex: élection présidentielle 2024" 
+        {/*  <h2 className="text-2xl font-bold mb-2">Rechercher des données</h2> */}
+        <SparklesText
+          className="text-2xl font-bold mb-2 text-center"
+          text="Rechercher des données"
+        />
+
+        <div className="flex justify-start">
+          {/* <Input
+            placeholder="Ex: élection présidentielle 2024"
             className="flex-grow"
           />
           <Button>
             <Search className="mr-2" />
             Rechercher
-          </Button>
+          </Button> */}
+          <PlaceholdersAndVanishInput
+            placeholders={placeholders}
+            onChange={handleChange}
+            onSubmit={onSubmit}
+          />
         </div>
 
         <div className="flex justify-between items-center mb-6">

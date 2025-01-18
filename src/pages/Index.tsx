@@ -5,11 +5,17 @@ import { DataSearch } from "@/components/DataSearch";
 import { Statistics } from "@/components/Statistics";
 import { Supporters } from "@/components/Supporters";
 import { DatasetCard } from "@/components/DatasetCard";
+import { AuroraText } from "@/components/AuroraText";
+import { SparklesText } from "@/components/ui/sparkles-text";
+import { HeroHighlight, Highlight } from "@/components/ui/hero-highlight";
+import { GraphDataMovement } from "@/components/GraphDataMovement";
+import ReactCountryFlag from "react-country-flag";
 
 const datasets = [
   {
     title: "Pharmacies de Garde",
-    description: "Accédez en temps réel aux pharmacies de garde dans toute l'Algérie",
+    description:
+      "Accédez en temps réel aux pharmacies de garde dans toute l'Algérie",
     organization: "Ministère de la Santé",
     organizationLogo: "/placeholder.svg",
     keywords: ["santé", "pharmacie", "urgence"],
@@ -17,7 +23,7 @@ const datasets = [
     downloads: 1245,
     views: 5890,
     price: 2,
-    category: "Santé"
+    category: "Santé",
   },
   {
     title: "Wilayas",
@@ -29,7 +35,7 @@ const datasets = [
     downloads: 3456,
     views: 12890,
     price: 1,
-    category: "Géographie"
+    category: "Géographie",
   },
   {
     title: "Codes Postaux",
@@ -41,32 +47,46 @@ const datasets = [
     downloads: 2789,
     views: 8900,
     price: 1,
-    category: "Adresses"
-  }
+    category: "Adresses",
+  },
 ];
 
 const Index = () => {
   return (
     <div className="min-h-screen bg-gradient-to-b from-white to-accent">
       <Navbar />
-      
+
       {/* Hero Section with Parallax */}
       <HeroParallaxDemo />
 
       {/* Datasets Section */}
-      <section className="py-16 container relative z-10 bg-white/80 backdrop-blur-lg mt-[200vh]">
-        <h2 className="text-3xl font-bold text-center mb-12">Nos Jeux de Données</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {datasets.map((dataset) => (
-            <motion.div
-              key={dataset.title}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2 }}
+      <section className=" z-10 backdrop-blur-lg mt-[170vh] ">
+        <div className="flex flex-col  lg:flex-row ">
+          <HeroHighlight className="-mt-60 md:-mt-36 lg:-mt-24">
+            <motion.h1
+              initial={{
+                opacity: 0,
+                y: 20,
+              }}
+              animate={{
+                opacity: 1,
+                y: [20, -5, 0],
+              }}
+              transition={{
+                duration: 0.5,
+                ease: [0.4, 0.0, 0.2, 1],
+              }}
+              className="text-4xl px-4 md:text-4xl lg:text-5xl font-bold text-neutral-700 dark:text-white max-w-4xl leading-relaxed lg:leading-snug text-center mx-auto "
             >
-              <DatasetCard {...dataset} />
-            </motion.div>
-          ))}
+              Hi👋, you are in the right place to find{" "}
+              <Highlight className="text-black dark:text-white">
+                the best datasets of <ReactCountryFlag countryCode="DZ" svg />{" "}
+                Algeria .
+              </Highlight>
+            </motion.h1>
+          </HeroHighlight>
+          {/* Data Section */}
+          <GraphDataMovement className="-mt-72 px-20 md:-mt-36 lg:-mt-0" />
         </div>
       </section>
 
