@@ -1,11 +1,11 @@
 import { motion } from "framer-motion";
 import { Navbar } from "@/components/Navbar";
 import { HeroParallaxDemo } from "@/components/HeroParallaxDemo";
-import { DataSearch } from "@/components/DataSearch";
+import { DataSearch } from "@/components/dataset/DataSearch";
 import { Statistics } from "@/components/Statistics";
 import { Supporters } from "@/components/Supporters";
-import { DatasetCard } from "@/components/DatasetCard";
-import { AuroraText } from "@/components/AuroraText";
+import { DatasetCard } from "@/components/dataset/DatasetCard";
+import { AuroraText } from "@/components/ui/AuroraText";
 import { SparklesText } from "@/components/ui/sparkles-text";
 import { HeroHighlight, Highlight } from "@/components/ui/hero-highlight";
 import { GraphDataMovement } from "@/components/GraphDataMovement";

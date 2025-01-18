@@ -4,7 +4,7 @@ import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Calendar, Download, FileText, Database, User } from "lucide-react";
+import { Calendar, FileText, Database, User, Sun, Moon } from "lucide-react";
 import { Dataset } from "@/interface/DatasetInterface";
 import { datasets } from "@/data/FakeDataset";
 
@@ -13,28 +13,91 @@ const DatasetDetail = () => {
 
   const [fetching, setFetching] = useState(true);
   const [dataset, setDataset] = useState<Dataset>(null as any);
+  const [displayFormat, setDisplayFormat] = useState("table");
 
   useEffect(() => {
-    // Fetch dataset by id
-    // setDataset(response.data);
-
     datasets.forEach((dataset) => {
       if (dataset.slug === id) {
         setDataset(dataset);
         setFetching(false);
       }
     });
-  });
+  }, [id]);
+
+  const renderContent = () => {
+    switch (displayFormat) {
+      case "table":
+        return (
+          <div className="overflow-x-auto">
+            <table className="w-full">
+              <thead>
+                <tr className="border-b border-gray-300 dark:border-gray-700">
+                  {dataset.preview.length > 0 &&
+                    Object.keys(dataset.preview[0]).map((column) => (
+                      <th key={column} className="text-left p-2 capitalize">
+                        {column.replace(/_/g, " ")}
+                      </th>
+                    ))}
+                </tr>
+              </thead>
+              <tbody>
+                {dataset.preview.map((item, index) => (
+                  <tr
+                    key={index}
+                    className="border-b border-gray-300 dark:border-gray-700"
+                  >
+                    {Object.values(item).map((value, colIndex) => (
+                      <td key={colIndex} className="p-2">
+                        {value}
+                      </td>
+                    ))}
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        );
+      case "json":
+        return (
+          <pre className="bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-100 p-4 rounded">
+            {JSON.stringify(dataset.preview, null, 2)}
+          </pre>
+        );
+      case "csv":
+        const csvData = [
+          Object.keys(dataset.preview[0]).join(","),
+          ...dataset.preview.map((row) =>
+            Object.values(row)
+              .map((value) => `"${value}"`)
+              .join(",")
+          ),
+        ].join("\n");
+        return (
+          <pre className="bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-100 p-4 rounded">
+            {csvData}
+          </pre>
+        );
+      default:
+        return <div>Format non supporté</div>;
+    }
+  };
 
   if (fetching) {
-    return <div>Chargement...</div>;
+    return (
+      <div className="text-gray-800 dark:text-gray-100">Chargement...</div>
+    );
   }
 
   if (!dataset) {
-    return <div>Dataset not found</div>;
+    return (
+      <div className="text-gray-800 dark:text-gray-100">Dataset not found</div>
+    );
   }
+
   return (
-    <div className="min-h-screen flex flex-col bg-background text-foreground">
+    <div
+      className={`min-h-screen flex flex-col bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 transition-colors`}
+    >
       <Navbar />
 
       <main className="flex-grow container mx-auto px-4 py-8 mt-24">
@@ -48,11 +111,11 @@ const DatasetDetail = () => {
                   <FileText className="w-4 h-4 mr-2" />
                   {dataset.fileInfo.format}
                 </Badge>
-                <span className="text-muted-foreground flex items-center">
+                <span className="flex items-center">
                   <Database className="w-4 h-4 mr-2" />
                   {dataset.fileInfo.records} enregistrements
                 </span>
-                <span className="text-muted-foreground flex items-center">
+                <span className="flex items-center">
                   <Calendar className="w-4 h-4 mr-2" />
                   Mis à jour le {dataset.fileInfo.lastUpdate}
                 </span>
@@ -67,43 +130,67 @@ const DatasetDetail = () => {
           </div>
 
           {/* Description */}
-          <div className="prose dark:prose-invert max-w-none bg-card p-6 rounded-lg">
+          <div className="p-6 rounded-lg prose bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-100">
             <div className="markdown-content">{dataset.description}</div>
           </div>
 
-          {/* Aperçu des données */}
-          <div className="bg-card p-6 rounded-lg">
-            <h2 className="text-2xl font-semibold mb-4">Aperçu des données</h2>
-            <div className="overflow-x-auto">
-              <table className="w-full">
-                <thead>
-                  <tr className="border-b dark:border-gray-700">
-                    <th className="text-left p-2">ID</th>
-                    <th className="text-left p-2">Nom</th>
-                    <th className="text-left p-2">Adresse</th>
-                    <th className="text-left p-2">Wilaya</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {dataset.preview.map((item) => (
-                    <tr key={item.id} className="border-b dark:border-gray-700">
-                      <td className="p-2">{item.id}</td>
-                      <td className="p-2">{item.name}</td>
-                      <td className="p-2">{item.address}</td>
-                      <td className="p-2">{item.wilaya}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
+          {/* Sélecteur de format d'affichage */}
+          <div className="p-6 rounded-lg bg-gray-100 dark:bg-gray-800">
+            <div className="flex items-center justify-between mb-4">
+              <div className="flex items-center">
+                <h2 className="text-2xl font-semibold mr-4">
+                  Extrait des données
+                </h2>
+                <div className="flex space-x-4">
+                  <label className="flex items-center">
+                    <input
+                      type="radio"
+                      name="format"
+                      value="table"
+                      checked={displayFormat === "table"}
+                      onChange={() => setDisplayFormat("table")}
+                      className="mr-2"
+                    />
+                    Tableau
+                  </label>
+                  <label className="flex items-center">
+                    <input
+                      type="radio"
+                      name="format"
+                      value="json"
+                      checked={displayFormat === "json"}
+                      onChange={() => setDisplayFormat("json")}
+                      className="mr-2"
+                    />
+                    JSON
+                  </label>
+                  <label className="flex items-center">
+                    <input
+                      type="radio"
+                      name="format"
+                      value="csv"
+                      checked={displayFormat === "csv"}
+                      onChange={() => setDisplayFormat("csv")}
+                      className="mr-2"
+                    />
+                    CSV
+                  </label>
+                </div>
+              </div>
             </div>
+            {renderContent()}
           </div>
 
           {/* Informations sur le fournisseur */}
-          <div className="bg-card p-6 rounded-lg">
+          <div className="p-6 rounded-lg bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-100">
             <h2 className="text-2xl font-semibold mb-4">Fournisseur</h2>
             <div className="flex items-center justify-between">
               <div className="flex items-center">
-                <User className="w-6 h-6 mr-2" />
+                <img
+                  src={dataset.provider.logo}
+                  alt={dataset.provider.name}
+                  className="w-8 h-8 mr-2 rounded-full"
+                />
                 <span>{dataset.provider.name}</span>
               </div>
               <Button variant="outline" asChild>

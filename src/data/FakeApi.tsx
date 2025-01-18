@@ -2,6 +2,7 @@ export const apis = [
   {
     title: "Pharmacies API",
     slug: "pharmacies-de-garde",
+    baseUrl: "https://api.data-dz.com/api/pharmacies-de-garde",
     description: "API complète des pharmacies de garde",
     availability: 99.9,
     requiresCredits: true,
@@ -11,24 +12,21 @@ export const apis = [
     
       Cette API permet d'accéder aux informations sur les pharmacies de garde en Algérie.
       
-      ## Fonctionnalités principales
+      \n## Fonctionnalités principales
       
       - Liste des pharmacies de garde par wilaya
       - Recherche par commune
       - Informations détaillées sur chaque pharmacie
       - Mise à jour en temps réel`,
-    documentationMD: `# Documentation technique
-      
-      ## Endpoints
+    documentationMD: `# Documentation technique 
+    
+    \n## Endpoints
       
       GET /api/pharmacies/garde
       GET /api/pharmacies/garde/{wilaya}
-      GET /api/pharmacies/garde/{wilaya}/{commune}
+      GET /api/pharmacies/garde/{wilaya}/{commune}\n## Authentication
       
-      ## Authentication
-      
-      Bearer token requis pour tous les endpoints.`,
-
+      Bearer token requis pour tous les endpoints.`.replace(/(^#)/gm, "\n$1"),
     provider: {
       name: "Ministère de la Santé",
       contact: "contact@sante.gov.dz",
@@ -36,6 +34,7 @@ export const apis = [
   },
   {
     title: "Wilayas API",
+    baseUrl: "https://api.data-dz.com/api/wilayas",
     slug: "wilayas",
     description: "Données géographiques des wilayas",
     availability: 100,

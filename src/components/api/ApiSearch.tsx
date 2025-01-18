@@ -9,24 +9,24 @@ export const ApiSearch = () => {
 
   return (
     <div>
-      <div className="flex justify-between items-center mb-6 mt-12">
+      <div className="flex justify-between items-center mb-6 mt-12 z-10">
         <h2 className="text-xl font-semibold">Search APIs</h2>
         <Input
           placeholder="Search for an API..."
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
-          className="max-w-xs dark:bg-gray-800"
+          className="max-w-xs dark:bg-gray-800 z-10"
         />
       </div>
 
-      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 z-10">
         {apis
           .filter((api) =>
             api.title.toLowerCase().includes(searchQuery.toLowerCase())
           )
           .map((api) => (
             <Link to={`/api/${api.slug}`} key={api.title}>
-              <div className="p-6 rounded-lg border border-gray-800 bg-gray-900/50">
+              <div className="p-6 rounded-lg border border-gray-800 dark:bg-gray-900/50">
                 <div className="flex justify-between items-start mb-4">
                   <h3 className="text-lg font-semibold">{api.title}</h3>
                   {api.requiresCredits ? (
@@ -35,9 +35,11 @@ export const ApiSearch = () => {
                     <Unlock className="text-green-500" />
                   )}
                 </div>
-                <p className="text-gray-400 mb-4">{api.description}</p>
+                <p className="text-gray-700 mb-4 dark:text-gray-400">
+                  {api.description}
+                </p>
                 <div className="flex justify-between items-center text-sm">
-                  <span className="text-gray-400">
+                  <span className="text-gray-400 dark:text-gray-500">
                     Availability: {api.availability}%
                   </span>
                   <span className="text-gray-400">{api.version}</span>

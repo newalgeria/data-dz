@@ -8,7 +8,12 @@ import { Lock, Unlock } from "lucide-react";
 import { apis } from "@/data/FakeApi";
 import { Link } from "react-router-dom";
 import { Footer } from "@/components/Footer";
-import { ApiSearch } from "@/components/ApiSearch";
+import { ApiSearch } from "@/components/api/ApiSearch";
+import { AuroraBackground } from "@/components/ui/aurora-bg";
+import { motion } from "framer-motion";
+import { HeroHighlight, Highlight } from "@/components/ui/hero-highlight";
+import ReactCountryFlag from "react-country-flag";
+import { WorldMapConnection } from "@/components/api/WorldMapConnection";
 
 const technologies = [
   "REST API",
@@ -25,44 +30,98 @@ const Api = () => {
   const [searchQuery, setSearchQuery] = useState("");
 
   return (
-    <div className="min-h-screen bg-gray-900 text-white">
+    <div className="min-h-screen ">
       <Navbar />
 
       <div className="relative">
         <div className="absolute inset-0 bg-[linear-gradient(to_right,#4f4f4f2e_1px,transparent_1px),linear-gradient(to_bottom,#4f4f4f2e_1px,transparent_1px)] bg-[size:14px_24px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)]" />
-
-        <div className="container relative pt-32 pb-16">
-          <h1 className="text-4xl font-bold mb-8">API Documentation</h1>
-
-          <div className="mt-8">
-            <h2 className="text-xl font-semibold mb-4">
-              Technologies Supportées
-            </h2>
-            <Marquee className="py-4">
-              {technologies.map((tech) => (
-                <span key={tech} className="mx-8 text-primary-foreground">
-                  {tech}
-                </span>
-              ))}
-            </Marquee>
-          </div>
-
-          <ApiSearch />
-
-          <div className="mt-16 text-center">
-            <Button
-              variant="outline"
-              size="lg"
-              className="mx-auto text-slate-900 dark:text-white dark:hover:bg-gray-800"
+        <AuroraBackground>
+          <motion.div
+            initial={{ opacity: 0.0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{
+              delay: 0.3,
+              duration: 0.8,
+              ease: "easeInOut",
+            }}
+            className="relative flex flex-col gap-4 items-center justify-center px-4"
+          >
+            <div className="text-3xl md:text-7xl font-bold dark:text-white text-center">
+              The first API platform for Algeria{" "}
+              <ReactCountryFlag countryCode="DZ" svg />
+            </div>
+            <div className="font-extralight text-base md:text-4xl dark:text-neutral-200 py-4">
+              And this is just the beginning.
+            </div>
+            <button
+              className="bg-black dark:bg-white rounded-full w-fit text-white dark:text-black px-4 py-2"
               onClick={() =>
-                window.open(
-                  `mailto:new-algeria.org@gmail.com?subject=Proposition%20d%27API&body=Bonjour%2C%0A%0AJe%20souhaite%20proposer%20une%20API%20pour%20votre%20plateforme.%20Voici%20les%20d%C3%A9tails%20%3A%0A%0ANom%20de%20l%27API%20%3A%20%0A%0ADescription%20%3A%20%0A%0AURL%20de%20l%27API%20%3A%20%0A%0ACordialement%2C%0AVotre%20Nom`
-                )
+                window.scrollTo({ top: window.innerHeight, behavior: "smooth" })
               }
             >
-              Proposer une API
-            </Button>
+              Get Started
+            </button>
+          </motion.div>
+        </AuroraBackground>
+        <div className="container relative pb-16 -mt-32 ">
+          <HeroHighlight className="">
+            <motion.h1
+              initial={{
+                opacity: 0,
+                y: 20,
+              }}
+              animate={{
+                opacity: 1,
+                y: [20, -5, 0],
+              }}
+              transition={{
+                duration: 0.5,
+                ease: [0.4, 0.0, 0.2, 1],
+              }}
+              className="text-4xl px-4 md:text-4xl lg:text-5xl font-bold text-neutral-700 dark:text-white max-w-4xl leading-relaxed lg:leading-snug text-center mx-auto "
+            >
+              Hi👋, you are in the right place to find{" "}
+              <Highlight className="text-black dark:text-white">
+                the best apis of <ReactCountryFlag countryCode="DZ" svg />{" "}
+                Algeria .
+              </Highlight>
+            </motion.h1>
+          </HeroHighlight>
+
+          <div className="-mt-36">
+            <ApiSearch />
+            <div className="mt-8 text-right">
+              <Button
+                variant="outline"
+                size="lg"
+                className="mx-auto text-slate-900 dark:text-white dark:hover:bg-gray-800"
+                onClick={() =>
+                  window.open(
+                    `mailto:new-algeria.org@gmail.com?subject=Proposition%20d%27API&body=Bonjour%2C%0A%0AJe%20souhaite%20proposer%20une%20API%20pour%20votre%20plateforme.%20Voici%20les%20d%C3%A9tails%20%3A%0A%0ANom%20de%20l%27API%20%3A%20%0A%0ADescription%20%3A%20%0A%0AURL%20de%20l%27API%20%3A%20%0A%0ACordialement%2C%0AVotre%20Nom`
+                  )
+                }
+              >
+                Proposer une API
+              </Button>
+            </div>
+            <div className="mt-20">
+              <h2 className="text-xl font-semibold mb-4">
+                Technologies Supportées
+              </h2>
+              <Marquee className="py-4">
+                {technologies.map((tech) => (
+                  <span
+                    key={tech}
+                    className="mx-8 dark:text-primary-foreground text-black"
+                  >
+                    {tech}
+                  </span>
+                ))}
+              </Marquee>
+            </div>
           </div>
+
+          <WorldMapConnection />
         </div>
       </div>
       <Footer />

@@ -9,10 +9,11 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { motion } from "framer-motion";
-import { PlaceholdersAndVanishInput } from "./ui/placeholders-and-vanish-input";
-import { SparklesText } from "./ui/sparkles-text";
+import { PlaceholdersAndVanishInput } from "../ui/placeholders-and-vanish-input";
+import { SparklesText } from "../ui/sparkles-text";
 import { datasets } from "@/data/FakeDataset";
 import { DatasetCard } from "./DatasetCard";
+import { useState } from "react";
 
 const placeholders = [
   "Election présidentielle 2024",
@@ -22,9 +23,45 @@ const placeholders = [
 ];
 
 export const DataSearch = () => {
+  const [searchQuery, setSearchQuery] = useState("");
+  const [filteredDatasets, setFilteredDatasets] = useState(datasets);
+  const [sortCriteria, setSortCriteria] = useState("relevance");
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    console.log(e.target.value);
+    const query = e.target.value;
+    setSearchQuery(query);
+    filterAndSortDatasets(query, sortCriteria);
   };
+
+  const handleSortChange = (value: string) => {
+    setSortCriteria(value);
+    filterAndSortDatasets(searchQuery, value);
+  };
+
+  const filterAndSortDatasets = (query: string, sort: string) => {
+    let filtered = datasets.filter(
+      (dataset) =>
+        dataset.title.toLowerCase().includes(query.toLowerCase()) ||
+        dataset.keywords.some((keyword) =>
+          keyword.toLowerCase().includes(query.toLowerCase())
+        ) ||
+        dataset.description.toLowerCase().includes(query.toLowerCase()) ||
+        dataset.provider.name.toLowerCase().includes(query.toLowerCase())
+    );
+
+    if (sort === "date") {
+      filtered = filtered.sort(
+        (a, b) =>
+          new Date(b.fileInfo.lastUpdate).getTime() -
+          new Date(b.fileInfo.lastUpdate).getTime()
+      );
+    } else if (sort === "popularity") {
+      filtered = filtered.sort((a, b) => b.views - a.views);
+    }
+
+    setFilteredDatasets(filtered);
+  };
+
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     console.log("submitted");
@@ -38,21 +75,12 @@ export const DataSearch = () => {
         transition={{ duration: 0.5 }}
         className="max-w-7xl mx-auto"
       >
-        {/*  <h2 className="text-2xl font-bold mb-2">Rechercher des données</h2> */}
         <SparklesText
           className="text-2xl font-bold mb-2 text-center"
           text="Rechercher des données"
         />
 
         <div className="flex justify-start">
-          {/* <Input
-            placeholder="Ex: élection présidentielle 2024"
-            className="flex-grow"
-          />
-          <Button>
-            <Search className="mr-2" />
-            Rechercher
-          </Button> */}
           <PlaceholdersAndVanishInput
             placeholders={placeholders}
             onChange={handleChange}
@@ -61,8 +89,8 @@ export const DataSearch = () => {
         </div>
 
         <div className="flex justify-between items-center mb-6">
-          <p className="text-gray-600">{datasets.length} résultats</p>
-          <Select defaultValue="relevance">
+          <p className="text-gray-600">{filteredDatasets.length} résultats</p>
+          <Select defaultValue="relevance" onValueChange={handleSortChange}>
             <SelectTrigger className="w-[180px]">
               <SelectValue placeholder="Trier par" />
             </SelectTrigger>
@@ -75,7 +103,7 @@ export const DataSearch = () => {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {datasets.map((dataset) => (
+          {filteredDatasets.map((dataset) => (
             <motion.div
               key={dataset.title}
               initial={{ opacity: 0, scale: 0.9 }}

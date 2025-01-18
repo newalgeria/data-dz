@@ -14,19 +14,29 @@ export const Navbar = () => {
           <img src={DATA_DZ_LOGO} alt="Data DZ" className="h-20" />
         </Link>
         <div className="flex items-center gap-6">
-          <Link to="/" className="text-gray-600 dark:text-gray-300 hover:text-primary">
+          <Link
+            to="/"
+            className="text-gray-600 dark:text-gray-300 hover:text-primary"
+          >
             Accueil
           </Link>
-          <Link to="/api" className="text-gray-600 dark:text-gray-300 hover:text-primary">
+          <Link
+            to="/api"
+            className="text-gray-600 dark:text-gray-300 hover:text-primary"
+          >
             API
           </Link>
-          <Button 
-            variant="ghost" 
+          <Button
+            variant="ghost"
             size="icon"
             onClick={toggleTheme}
             className="mr-4"
           >
-            {theme === 'dark' ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
+            {theme === "dark" ? (
+              <Sun className="h-5 w-5" />
+            ) : (
+              <Moon className="h-5 w-5" />
+            )}
           </Button>
           <Button variant="default" className="bg-primary text-white">
             <Link to="/getting-started">Commencer</Link>

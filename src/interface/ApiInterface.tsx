@@ -3,6 +3,7 @@ import { Provider } from "./DatasetInterface";
 export interface ApiData {
   title: string;
   slug: string;
+  baseUrl: string;
   description: string;
   availability: number;
   requiresCredits: boolean;
