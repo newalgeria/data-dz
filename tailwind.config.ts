@@ -40,13 +40,67 @@ export default {
         "color-4": "hsl(var(--color-4))",
         "color-5": "hsl(var(--color-5))",
       },
-      fontFamily: {
-        sans: ["Inter", "sans-serif"],
-      },
-      animation: {
-        marquee: "marquee var(--duration) linear infinite",
-        "marquee-vertical": "marquee-vertical var(--duration) linear infinite",
-        "border-beam": "border-beam calc(var(--duration)*1s) infinite linear",
+      typography: {
+        DEFAULT: {
+          css: {
+            maxWidth: 'none',
+            color: 'inherit',
+            a: {
+              color: 'inherit',
+              textDecoration: 'none',
+              fontWeight: '500',
+            },
+            '[class~="lead"]': {
+              color: 'inherit',
+            },
+            strong: {
+              color: 'inherit',
+            },
+            'ul > li::before': {
+              backgroundColor: 'currentColor',
+            },
+            hr: {
+              borderColor: 'currentColor',
+              opacity: 0.3,
+            },
+            blockquote: {
+              color: 'inherit',
+              borderLeftColor: 'currentColor',
+            },
+            h1: {
+              color: 'inherit',
+            },
+            h2: {
+              color: 'inherit',
+            },
+            h3: {
+              color: 'inherit',
+            },
+            h4: {
+              color: 'inherit',
+            },
+            'figure figcaption': {
+              color: 'inherit',
+            },
+            code: {
+              color: 'inherit',
+            },
+            'a code': {
+              color: 'inherit',
+            },
+            pre: {
+              color: 'currentColor',
+              backgroundColor: 'rgb(0 0 0 / 0.1)',
+            },
+            thead: {
+              color: 'inherit',
+              borderBottomColor: 'currentColor',
+            },
+            'tbody tr': {
+              borderBottomColor: 'currentColor',
+            },
+          },
+        },
       },
       keyframes: {
         "aurora-border": {
@@ -164,5 +218,5 @@ export default {
       },
     },
   },
-  plugins: [require("tailwindcss-animate")],
+  plugins: [require("tailwindcss-animate"), require("@tailwindcss/typography")],
 } satisfies Config;

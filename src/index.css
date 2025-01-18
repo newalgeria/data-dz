@@ -58,10 +58,12 @@
   }
 }
 
-.prose {
-  @apply dark:prose-invert max-w-none;
-}
+@layer components {
+  .prose {
+    @apply prose-neutral dark:prose-invert max-w-none;
+  }
 
-.markdown-content {
-  @apply prose dark:prose-invert max-w-none;
+  .markdown-content {
+    @apply prose-neutral dark:prose-invert max-w-none;
+  }
 }
